@@ -1,1 +1,896 @@
-<!doctype html><meta charset='utf-8'><title>App A2</title><p>Veuillez régénérer l'app.</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respect & Tolérance : Le Parcours d'Ivona</title>
+
+    <!-- Police "Inter" -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.css" rel="stylesheet">
+    <!-- Icônes Material Symbols -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: #f0f4f8;
+            color: #1e293b;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* --------- Classes utilitaires simples (équivalents Tailwind légers) ---------- */
+
+        .hidden { display: none; }
+        .flex { display: flex; }
+        .inline-block { display: inline-block; }
+        .grid { display: grid; }
+
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-content: flex-end; }
+        .flex-col { flex-direction: column; }
+
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .text-center { text-align: center; }
+
+        .w-full { width: 100%; }
+        .w-48 { width: 12rem; }
+        .w-8 { width: 2rem; }
+        .h-8 { height: 2rem; }
+        .h-16 { height: 4rem; }
+
+        .p-2 { padding: 0.5rem; }
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        .p-5 { padding: 1.25rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+
+        .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+        .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-6 { margin-bottom: 1.5rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-10 { margin-bottom: 2.5rem; }
+
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-6 { margin-top: 1.5rem; }
+        .mt-8 { margin-top: 2rem; }
+        .mt-10 { margin-top: 2.5rem; }
+
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
+
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+
+        .rounded-lg { border-radius: 0.5rem; }
+        .rounded-xl { border-radius: 0.75rem; }
+        .rounded-2xl { border-radius: 1rem; }
+        .rounded-full { border-radius: 999px; }
+
+        .border { border: 1px solid #e5e7eb; }
+        .border-b { border-bottom: 1px solid #e5e7eb; }
+        .border-l-4 { border-left-width: 4px; }
+
+        .border-slate-100 { border-color: #e5e7eb; }
+        .border-slate-200 { border-color: #e2e8f0; }
+        .border-blue-100 { border-color: #dbeafe; }
+        .border-blue-600 { border-color: #2563eb; }
+        .border-indigo-100 { border-color: #e0e7ff; }
+        .border-red-500 { border-color: #ef4444; }
+        .border-green-500 { border-color: #22c55e; }
+        .border-slate-300 { border-color: #cbd5f5; }
+
+        .border-dashed { border-style: dashed; }
+
+        .bg-white { background-color: #ffffff; }
+        .bg-blue-50 { background-color: #eff6ff; }
+        .bg-blue-600 { background-color: #2563eb; }
+        .bg-indigo-50 { background-color: #eef2ff; }
+        .bg-indigo-600 { background-color: #4f46e5; }
+        .bg-red-50 { background-color: #fef2f2; }
+        .bg-red-700 { background-color: #b91c1c; }
+        .bg-slate-50 { background-color: #f8fafc; }
+        .bg-slate-800 { background-color: #1e293b; }
+        .bg-black { background-color: #000000; }
+        .bg-green-100 { background-color: #dcfce7; }
+
+        .bg-green-50 { background-color: #ecfdf3; }
+
+        .text-white { color: #ffffff; }
+        .text-slate-400 { color: #9ca3af; }
+        .text-slate-500 { color: #6b7280; }
+        .text-slate-600 { color: #4b5563; }
+        .text-slate-700 { color: #374151; }
+        .text-slate-800 { color: #1f2937; }
+        .text-slate-900 { color: #0f172a; }
+        .text-blue-50 { color: #eff6ff; }
+        .text-blue-700 { color: #1d4ed8; }
+        .text-blue-800 { color: #1e40af; }
+        .text-blue-900 { color: #1e3a8a; }
+        .text-indigo-800 { color: #3730a3; }
+        .text-indigo-900 { color: #312e81; }
+        .text-red-500 { color: #ef4444; }
+        .text-red-700 { color: #b91c1c; }
+        .text-green-500 { color: #22c55e; }
+        .text-green-600 { color: #16a34a; }
+        .text-green-800 { color: #166534; }
+        .text-green-900 { color: #14532d; }
+
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-4xl { font-size: 2.25rem; }
+
+        .font-normal { font-weight: 400; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+
+        .tracking-tight { letter-spacing: -0.02em; }
+        .tracking-widest { letter-spacing: 0.15em; }
+
+        .uppercase { text-transform: uppercase; }
+        .italic { font-style: italic; }
+
+        .shadow-sm { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.07); }
+        .shadow-md { box-shadow: 0 4px 6px rgba(15, 23, 42, 0.12); }
+        .shadow-lg { box-shadow: 0 10px 15px rgba(15, 23, 42, 0.20); }
+
+        .opacity-10 { opacity: 0.1; }
+        .opacity-60 { opacity: 0.6; }
+        .opacity-50 { opacity: 0.5; }
+
+        .cursor-not-allowed { cursor: not-allowed; }
+
+        .overflow-hidden { overflow: hidden; }
+        .overflow-x-auto { overflow-x: auto; }
+
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .top-0 { top: 0; }
+        .left-0 { left: 0; }
+        .right-0 { right: 0; }
+        .z-50 { z-index: 50; }
+
+        .whitespace-nowrap { white-space: nowrap; }
+
+        .transition { transition: all 0.2s ease; }
+        .transition-transform { transition: transform 0.3s ease; }
+
+        .aspect-video {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+        }
+        .aspect-video > iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .aspect-square {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+        }
+
+        .transform { transform-origin: center; }
+        .-rotate-2 { transform: rotate(-2deg); }
+
+        /* --------- Animations / composants spécifiques ---------- */
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-box {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .feedback-correct {
+            background-color: #dcfce7;
+            color: #166534;
+            border-left: 4px solid #166534;
+        }
+        .feedback-incorrect {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #991b1b;
+        }
+
+        .nav-item {
+            border: none;
+            background: none;
+            font: inherit;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+            font-weight: 700;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-active .accordion-content {
+            max-height: 500px;
+        }
+        .accordion-active .rotate-icon {
+            transform: rotate(180deg);
+        }
+
+        .sticky-note {
+            background-color: #fef08a;
+            color: #854d0e;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            transform: rotate(-1deg);
+            transition: transform 0.2s;
+        }
+        .sticky-note:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        /* --------- Mise en page globale ---------- */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-inner {
+            max-width: 64rem;
+            margin: 0 auto;
+            padding: 0 1rem;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1d4ed8;
+            background-color: #eff6ff;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid #dbeafe;
+        }
+
+        .main-container {
+            max-width: 56rem;
+            margin: 0 auto;
+            padding: 1rem;
+            padding-bottom: 5rem;
+        }
+
+        .module-block {
+            margin-bottom: 2rem;
+        }
+
+        nav.tabs {
+            display: flex;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        nav.tabs button {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav.tabs button:hover {
+            color: #111827;
+        }
+
+        /* cartes / blocs */
+
+        .card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.07);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .btn {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.12);
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-outline {
+            background: none;
+            color: #6b7280;
+        }
+        .btn-outline:hover {
+            color: #111827;
+        }
+
+        .quiz-option {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+        }
+        .quiz-option:hover {
+            background-color: #f8fafc;
+        }
+
+        /* responsive grid simple */
+        .grid-2 {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .sm-text-xl { font-size: 1.25rem; }
+            .sm-text-base { font-size: 1rem; }
+        }
+
+        @media (min-width: 768px) {
+            .grid-3 {
+                grid-template-columns: 1fr 2fr;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+            .md-flex-row {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="flex items-center gap-2">
+            <div class="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">R</div>
+            <h1 class="font-bold text-lg tracking-tight">
+                Parcours Citoyen
+                <span class="text-slate-400 font-normal">| Prévention</span>
+            </h1>
+        </div>
+        <div class="badge">
+            Dispositif pHARe
+        </div>
+    </div>
+</header>
+
+<div class="main-container">
+
+    <!-- Titre de la séquence -->
+    <div class="text-center mb-10 fade-in">
+        <h2 class="text-3xl font-extrabold text-slate-800 mb-3">Le Parcours d'Ivona</h2>
+        <p class="text-slate-600 mx-auto" style="max-width: 32rem;">
+            Analyser une situation de harcèlement liée à l'origine et au cadre de vie scolaire (internat).
+        </p>
+    </div>
+
+    <!-- Navigation par onglets -->
+    <nav class="tabs overflow-x-auto">
+        <button class="nav-item active" onclick="showModule(1)">
+            1. Représentations
+        </button>
+        <button class="nav-item" onclick="showModule(2)">
+            2. Analyse du réel
+        </button>
+        <button class="nav-item" onclick="showModule(3)">
+            3. La Loi
+        </button>
+        <button class="nav-item" onclick="showModule(4)">
+            4. Agir
+        </button>
+    </nav>
+
+    <!-- MODULE 1 : OBSERVATION & REPRÉSENTATIONS -->
+    <section id="module-1" class="module-block fade-in">
+
+        <!-- Phase de représentation initiale -->
+        <div class="mb-8 bg-indigo-50 border border-indigo-100 rounded-xl p-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <span class="material-symbols-outlined" style="font-size:4.5rem;">psychology</span>
+            </div>
+            <h3 class="text-lg font-bold text-indigo-900 mb-2">Avant de commencer...</h3>
+            <p class="text-indigo-800 mb-4 text-sm">
+                Le harcèlement commence souvent par un "détail". Selon vous, sur quoi se basent les moqueries le
+                plus souvent ? (Un seul mot)
+            </p>
+
+            <div class="flex gap-2" id="initial-input-group" style="max-width:24rem;">
+                <input type="text" id="initial-word"
+                       placeholder="Ex: Physique, Origine, Vêtements..."
+                       class="flex-1 p-3 rounded-lg border"
+                       style="border-color:#c7d2fe; outline:none;">
+                <button onclick="saveInitialRepresentation()"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold transition">
+                    Valider
+                </button>
+            </div>
+            <div id="initial-feedback"
+                 class="hidden mt-3 text-indigo-700 font-medium flex items-center">
+                <span class="material-symbols-outlined mr-2">check_circle</span>
+                C'est noté ! Nous verrons si c'est le cas pour Ivona.
+            </div>
+        </div>
+
+        <!-- Bloc vidéo + consignes -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-xl font-bold text-slate-800 flex items-center">
+                    <span class="material-symbols-outlined mr-2" style="color:#2563eb;">visibility</span>
+                    Visionnage actif : Les indices
+                </h3>
+                <div class="mt-4 grid-2 text-sm text-slate-600">
+                    <div class="bg-slate-50 p-3 rounded border flex items-start">
+                        <span class="material-symbols-outlined mr-2" style="color:#f59e0b;">search</span>
+                        Repérez l'élément précis qui déclenche le premier rire (après la présentation d'Ivona).
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded border flex items-start">
+                        <span class="material-symbols-outlined mr-2" style="color:#f59e0b;">location_on</span>
+                        Identifiez les différents lieux (il y en a 3 principaux dont un lieu de vie).
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cadre vidéo -->
+            <div class="aspect-video bg-black">
+                <iframe
+                    title="La diversité fait notre force - Académie NANCY-METZ"
+                    src="https://tube-action-educative.apps.education.fr/videos/embed/tR4iBccZu6jqqpuBgHCG46"
+                    frameborder="0"
+                    allowfullscreen
+                    sandbox="allow-same-origin allow-scripts allow-popups">
+                </iframe>
+            </div>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+            <button onclick="showModule(2)"
+                    class="btn btn-primary flex items-center gap-2">
+                Passer à l'analyse
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- MODULE 2 : ANALYSE -->
+    <section id="module-2" class="module-block hidden fade-in">
+        <div class="grid-3 mb-8">
+            <!-- Zone de gauche : Le Contexte -->
+            <div class="bg-white p-5 rounded-xl border shadow-sm">
+                <h3 class="font-bold text-slate-800 mb-4 text-center">Le Scénario</h3>
+                <ul class="text-sm text-slate-600 space-y-3">
+                    <li class="flex items-center">
+                        <span class="material-symbols-outlined text-green-500 mr-2 font-bold">check</span>
+                        Arrivée d'Ivona (Macédoine)
+                    </li>
+                    <li class="flex items-center">
+                        <span class="material-symbols-outlined text-green-500 mr-2 font-bold">check</span>
+                        Erreur de salle (Stress)
+                    </li>
+                    <li class="flex items-center">
+                        <span class="material-symbols-outlined text-red-500 mr-2 font-bold">warning</span>
+                        Moqueries sur l'accent
+                    </li>
+                    <li class="flex items-center">
+                        <span class="material-symbols-outlined text-red-500 mr-2 font-bold">warning</span>
+                        Messages & Internat
+                    </li>
+                    <li class="flex items-center">
+                        <span class="material-symbols-outlined text-blue-500 mr-2 font-bold">info</span>
+                        Intervention CPE
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Quiz -->
+            <div class="bg-white p-6 rounded-xl border shadow-sm">
+                <h3 class="font-bold text-slate-800 mb-4 flex items-center">
+                    <span class="material-symbols-outlined mr-2" style="color:#4f46e5;">psychology_alt</span>
+                    Vérification des faits
+                </h3>
+
+                <!-- Question 1 -->
+                <div class="mb-6">
+                    <p class="font-medium text-slate-700 mb-2">
+                        1. Quel est le prétexte exact utilisé par les élèves pour se moquer ?
+                    </p>
+                    <div class="space-y-2">
+                        <button class="quiz-option"
+                                onclick="checkAnswer(this, false, 'Non, ce n\\'est pas mentionné dans la vidéo.')">
+                            Ses vêtements.
+                        </button>
+                        <button class="quiz-option"
+                                onclick="checkAnswer(this, true, 'Exact. La phrase entendue est : « Est-ce que t’as entendu son accent ? ».')">
+                            Son accent et son origine (Macédoine).
+                        </button>
+                        <button class="quiz-option"
+                                onclick="checkAnswer(this, false, 'Non, même si elle se trompe de salle, la moquerie porte sur sa voix.')">
+                            Son retard en classe.
+                        </button>
+                    </div>
+                    <div class="feedback-box"></div>
+                </div>
+
+                <!-- Question 2 -->
+                <div>
+                    <p class="font-medium text-slate-700 mb-2">
+                        2. Qu'est-ce qui prouve que le harcèlement dépasse le temps de classe dans cette vidéo ?
+                    </p>
+                    <div class="space-y-2">
+                        <button class="quiz-option"
+                                onclick="checkAnswer(this, true, 'Oui. Le script mentionne explicitement « Zoom sur les messages » et « Moqueries à l’internat ». C\\'est du cyberharcèlement.')">
+                            Les scènes de messages sur téléphone et à l'internat.
+                        </button>
+                        <button class="quiz-option"
+                                onclick="checkAnswer(this, false, 'Non, regardez bien la scène où elle est sur son lit avec son téléphone.')">
+                            Rien, cela se passe uniquement en cours.
+                        </button>
+                    </div>
+                    <div class="feedback-box"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-between">
+            <button onclick="showModule(1)" class="btn btn-outline">
+                Retour
+            </button>
+            <button onclick="showModule(3)"
+                    class="btn btn-primary flex items-center gap-2">
+                Voir les conséquences
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- MODULE 3 : CONSÉQUENCES & LOI -->
+    <section id="module-3" class="module-block hidden fade-in">
+        <div class="mb-6 bg-blue-50 border-l-4 border-blue-600 p-4 rounded-2xl">
+            <h3 class="font-bold text-blue-900 mb-1">Le saviez-vous ?</h3>
+            <p class="text-blue-800 text-sm">
+                Le fait de harceler une personne en raison de son origine ou de son appartenance vraie ou supposée à une
+                ethnie ou une nation est une <strong>circonstance aggravante</strong>.
+            </p>
+        </div>
+
+        <div class="grid-2 gap-6">
+
+            <!-- Carte victime -->
+            <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <div class="bg-slate-800 p-4 text-white flex items-center justify-between">
+                    <h3 class="font-bold">La "Double Peine" d'Ivona</h3>
+                    <span class="material-symbols-outlined">bedroom_parent</span>
+                </div>
+                <div class="p-6">
+                    <p class="text-sm text-slate-600 mb-4">
+                        Dans la vidéo, Ivona est interne. Pourquoi cela aggrave-t-il sa souffrance ?
+                    </p>
+
+                    <div class="space-y-3">
+                        <div class="flex items-start bg-red-50 p-2 rounded">
+                            <span class="material-symbols-outlined text-red-500 mr-2 text-sm mt-1">no_meeting_room</span>
+                            <span class="text-sm text-slate-700">
+                                <strong>Pas de refuge :</strong> Elle ne peut pas rentrer chez elle le soir pour échapper aux moqueries.
+                            </span>
+                        </div>
+                        <div class="flex items-start bg-red-50 p-2 rounded">
+                            <span class="material-symbols-outlined text-red-500 mr-2 text-sm mt-1">group</span>
+                            <span class="text-sm text-slate-700">
+                                <strong>Proximité forcée :</strong> Elle dort peut-être dans la même chambre ou le même couloir que ceux qui se moquent.
+                            </span>
+                        </div>
+                        <div class="flex items-start bg-red-50 p-2 rounded">
+                            <span class="material-symbols-outlined text-red-500 mr-2 text-sm mt-1">smartphone</span>
+                            <span class="text-sm text-slate-700">
+                                <strong>Cyberharcèlement :</strong> Les messages reçus le soir (vus dans la vidéo) l'isolent même dans sa chambre.
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte auteur -->
+            <div class="bg-white rounded-xl shadow-sm border overflow-hidden">
+                <div class="bg-red-700 p-4 text-white flex items-center justify-between">
+                    <h3 class="font-bold">Les risques juridiques</h3>
+                    <span class="material-symbols-outlined">gavel</span>
+                </div>
+                <div>
+                    <!-- Accordéon scolaire -->
+                    <div class="border-b border-slate-100">
+                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800"
+                                onclick="toggleAccordion(this)">
+                            Sanctions Scolaires
+                            <span class="material-symbols-outlined rotate-icon text-slate-400 transition-transform">
+                                expand_more
+                            </span>
+                        </button>
+                        <div class="accordion-content bg-slate-50 px-4">
+                            <ul class="text-sm text-slate-700 pb-4 space-y-1" style="list-style: disc; padding-left:1.25rem;">
+                                <li>Mesure de responsabilisation (ex: présenter des excuses comme dans la vidéo ne suffit pas toujours).</li>
+                                <li>Exclusion temporaire de l'internat ou de l'établissement.</li>
+                                <li><strong>Conseil de Discipline</strong> : Exclusion définitive.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Accordéon pénal -->
+                    <div class="border-b border-slate-100">
+                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800"
+                                onclick="toggleAccordion(this)">
+                            Sanctions Pénales (Délit)
+                            <span class="material-symbols-outlined rotate-icon text-slate-400 transition-transform">
+                                expand_more
+                            </span>
+                        </button>
+                        <div class="accordion-content bg-slate-50 px-4">
+                            <div class="text-sm text-slate-700 pb-4">
+                                <p class="mb-2 font-semibold text-red-700">
+                                    Cyberharcèlement en meute = Circonstance aggravante.
+                                </p>
+                                <ul class="space-y-1 mb-2" style="list-style: disc; padding-left:1.25rem;">
+                                    <li>Saisie du téléphone portable.</li>
+                                    <li>Stage de citoyenneté.</li>
+                                    <li>Inscription au casier judiciaire.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-8 flex justify-between items-center">
+            <button onclick="showModule(2)" class="btn btn-outline">
+                Retour
+            </button>
+            <button onclick="showModule(4)"
+                    class="btn btn-primary flex items-center gap-2">
+                Agir et Aider
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- MODULE 4 : BILAN & ACTION -->
+    <section id="module-4" class="module-block hidden fade-in">
+
+        <!-- Message officiel -->
+        <div class="mb-10 rounded-2xl p-8 text-white text-center shadow-lg"
+             style="background: linear-gradient(to right, #2563eb, #4f46e5);">
+            <h3 class="text-xl font-bold mb-4">Ce qu'il faut retenir</h3>
+            <div class="text-blue-50 text-sm sm-text-base space-y-3"
+                 style="line-height:1.6; max-width:32rem; margin:0 auto;" >
+                <p>
+                    "Si vous êtes victime de harcèlement, n’hésitez pas à en parler à vos proches ou même aux adultes
+                    de votre établissement, notamment au service de vie scolaire."
+                </p>
+                <p>
+                    "Se mobiliser durant les heures de vie de classe pour évoquer les problèmes."
+                </p>
+                <p>
+                    "Se rapprocher des ambassadeurs et des délégués, ils sont là pour vous."
+                </p>
+            </div>
+
+            <div class="mt-8 bg-white text-slate-900 p-4 rounded-xl inline-block shadow-md">
+                <p class="text-xs uppercase font-bold text-slate-500 mb-1">
+                    Si vous êtes victime ou témoin
+                </p>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-green-600" style="font-size:1.75rem;">call</span>
+                    <span class="text-4xl font-extrabold text-green-600">3018</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Appel gratuit • Anonyme • 7j/7</p>
+            </div>
+        </div>
+
+        <!-- Retour sur représentations -->
+        <div class="mb-10 p-6 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 text-center">
+            <h3 class="text-xl font-bold text-slate-800 mb-6">
+                Évolution de votre réflexion
+            </h3>
+
+            <div class="flex flex-col md-flex-row gap-8 justify-center items-center">
+
+                <!-- Avant -->
+                <div class="w-48 aspect-square sticky-note p-4 flex flex-col justify-center transform -rotate-2">
+                    <span class="text-xs uppercase font-bold tracking-widest opacity-60 mb-2">
+                        Au début
+                    </span>
+                    <div id="display-initial-word"
+                         class="text-xl font-bold"
+                         style="word-wrap:break-word;">
+                        ...
+                    </div>
+                </div>
+
+                <span class="material-symbols-outlined text-slate-400" style="font-size:2.2rem;">
+                    arrow_right_alt
+                </span>
+
+                <!-- Après -->
+                <div class="w-48 aspect-square sticky-note p-4 flex flex-col justify-center bg-green-100 text-green-900">
+                    <span class="text-xs uppercase font-bold tracking-widest opacity-60 mb-2">
+                        Maintenant
+                    </span>
+                    <input type="text"
+                           placeholder="Un mot clé ?"
+                           class="bg-transparent text-center text-xl font-bold"
+                           style="border-bottom:1px solid rgba(22,163,74,0.4); padding-bottom:0.25rem; outline:none;"/>
+                </div>
+            </div>
+
+            <p class="text-slate-500 text-sm mt-6">
+                Avez-vous compris que même un "rire" ou un "message" participe au harcèlement ?
+            </p>
+        </div>
+
+        <div class="mt-10 text-center">
+            <button onclick="showModule(1)"
+                    class="text-slate-400 text-sm btn btn-outline">
+                Recommencer la séquence
+            </button>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // --- LOGIQUE DE STOCKAGE DES REPRÉSENTATIONS ---
+    let initialRepresentation = "";
+
+    function saveInitialRepresentation() {
+        const input = document.getElementById('initial-word');
+        const feedback = document.getElementById('initial-feedback');
+        const btn = document.querySelector('#initial-input-group button');
+
+        if (input.value.trim() !== "") {
+            initialRepresentation = input.value;
+
+            feedback.classList.remove('hidden');
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.innerText = "Enregistré";
+            input.disabled = true;
+
+            document.getElementById('display-initial-word').innerText = initialRepresentation;
+        }
+    }
+
+    // --- NAVIGATION ENTRE MODULES ---
+    function showModule(moduleId) {
+        document.querySelectorAll('.module-block').forEach(el => el.classList.add('hidden'));
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+
+        document.getElementById(`module-${moduleId}`).classList.remove('hidden');
+        document.querySelectorAll('.nav-item')[moduleId - 1].classList.add('active');
+
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    // --- QUIZ ---
+    function checkAnswer(btn, isCorrect, feedbackText) {
+        const parent = btn.parentElement;
+        const buttons = parent.querySelectorAll('button');
+        buttons.forEach(b => {
+            b.disabled = true;
+            b.classList.add('opacity-50', 'cursor-not-allowed');
+        });
+
+        btn.classList.remove('opacity-50');
+
+        const feedbackBox = parent.nextElementSibling;
+        feedbackBox.style.display = 'block';
+
+        if (isCorrect) {
+            btn.style.backgroundColor = '#ecfdf3';
+            btn.style.borderColor = '#22c55e';
+            btn.style.color = '#166534';
+            feedbackBox.className = 'feedback-box feedback-correct';
+            feedbackBox.innerHTML = "<strong>Correct !</strong> " + feedbackText;
+        } else {
+            btn.style.backgroundColor = '#fef2f2';
+            btn.style.borderColor = '#ef4444';
+            btn.style.color = '#b91c1c';
+            feedbackBox.className = 'feedback-box feedback-incorrect';
+            feedbackBox.innerHTML = "<strong>Attention.</strong> " + feedbackText;
+        }
+    }
+
+    // --- ACCORDÉON ---
+    function toggleAccordion(btn) {
+        const container = btn.parentElement;
+        container.classList.toggle('accordion-active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showModule(1);
+    });
+</script>
+
+</body>
+</html>
