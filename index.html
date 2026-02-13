@@ -188,6 +188,38 @@
         .transition { transition: all 0.2s ease; }
         .transition-transform { transition: transform 0.3s ease; }
 
+        .focus-ring:focus-visible {
+            outline: 3px solid rgba(59, 130, 246, 0.5);
+            outline-offset: 2px;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            top: 1rem;
+            background: #2563eb;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            z-index: 100;
+        }
+        .skip-link:focus {
+            left: 1rem;
+        }
+
+        .progress-track {
+            height: 0.5rem;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #4f46e5);
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
         .aspect-video {
             position: relative;
             width: 100%;
@@ -270,6 +302,15 @@
         }
         .sticky-note:hover {
             transform: rotate(0deg) scale(1.02);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in,
+            .transition,
+            .transition-transform {
+                animation: none;
+                transition: none;
+            }
         }
 
         /* --------- Mise en page globale ---------- */
@@ -423,6 +464,8 @@
 </head>
 <body>
 
+<a class="skip-link focus-ring" href="#main-content">Aller au contenu principal</a>
+
 <header>
     <div class="header-inner">
         <div class="flex items-center gap-2">
@@ -438,7 +481,7 @@
     </div>
 </header>
 
-<div class="main-container">
+<main id="main-content" class="main-container">
 
     <!-- Titre de la séquence -->
     <div class="text-center mb-10 fade-in">
@@ -448,18 +491,45 @@
         </p>
     </div>
 
+    <section class="card mb-8 fade-in">
+        <div class="card-body">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <p class="text-sm text-slate-500 uppercase tracking-widest">Progression</p>
+                    <h3 class="text-xl font-bold text-slate-800">Suivi de la séquence</h3>
+                </div>
+                <button id="reset-sequence" class="btn btn-outline focus-ring">
+                    Réinitialiser
+                </button>
+            </div>
+            <div class="progress-track mb-4">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="grid-2 text-sm text-slate-600">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-green-600">task_alt</span>
+                    <span id="progress-label">0/4 modules complétés</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-blue-600">schedule</span>
+                    <span>Temps estimé : 20 minutes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Navigation par onglets -->
     <nav class="tabs overflow-x-auto">
-        <button class="nav-item active" onclick="showModule(1)">
+        <button class="nav-item active focus-ring" onclick="showModule(1)">
             1. Représentations
         </button>
-        <button class="nav-item" onclick="showModule(2)">
+        <button class="nav-item focus-ring" onclick="showModule(2)">
             2. Analyse du réel
         </button>
-        <button class="nav-item" onclick="showModule(3)">
+        <button class="nav-item focus-ring" onclick="showModule(3)">
             3. La Loi
         </button>
-        <button class="nav-item" onclick="showModule(4)">
+        <button class="nav-item focus-ring" onclick="showModule(4)">
             4. Agir
         </button>
     </nav>
@@ -481,10 +551,10 @@
             <div class="flex gap-2" id="initial-input-group" style="max-width:24rem;">
                 <input type="text" id="initial-word"
                        placeholder="Ex: Physique, Origine, Vêtements..."
-                       class="flex-1 p-3 rounded-lg border"
+                       class="flex-1 p-3 rounded-lg border focus-ring"
                        style="border-color:#c7d2fe; outline:none;">
                 <button onclick="saveInitialRepresentation()"
-                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold transition">
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold transition focus-ring">
                     Valider
                 </button>
             </div>
@@ -528,7 +598,7 @@
 
         <div class="mt-6 flex justify-end">
             <button onclick="showModule(2)"
-                    class="btn btn-primary flex items-center gap-2">
+                    class="btn btn-primary flex items-center gap-2 focus-ring">
                 Passer à l'analyse
                 <span class="material-symbols-outlined">arrow_forward</span>
             </button>
@@ -573,7 +643,7 @@
                 </h3>
 
                 <!-- Question 1 -->
-                <div class="mb-6">
+                <div class="mb-6" data-question="1">
                     <p class="font-medium text-slate-700 mb-2">
                         1. Quel est le prétexte exact utilisé par les élèves pour se moquer ?
                     </p>
@@ -595,7 +665,7 @@
                 </div>
 
                 <!-- Question 2 -->
-                <div>
+                <div data-question="2">
                     <p class="font-medium text-slate-700 mb-2">
                         2. Qu'est-ce qui prouve que le harcèlement dépasse le temps de classe dans cette vidéo ?
                     </p>
@@ -615,11 +685,11 @@
         </div>
 
         <div class="flex justify-between">
-            <button onclick="showModule(1)" class="btn btn-outline">
+            <button onclick="showModule(1)" class="btn btn-outline focus-ring">
                 Retour
             </button>
             <button onclick="showModule(3)"
-                    class="btn btn-primary flex items-center gap-2">
+                    class="btn btn-primary flex items-center gap-2 focus-ring">
                 Voir les conséquences
                 <span class="material-symbols-outlined">arrow_forward</span>
             </button>
@@ -681,8 +751,9 @@
                 <div>
                     <!-- Accordéon scolaire -->
                     <div class="border-b border-slate-100">
-                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800"
-                                onclick="toggleAccordion(this)">
+                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800 focus-ring"
+                                onclick="toggleAccordion(this)"
+                                data-accordion="school">
                             Sanctions Scolaires
                             <span class="material-symbols-outlined rotate-icon text-slate-400 transition-transform">
                                 expand_more
@@ -699,8 +770,9 @@
 
                     <!-- Accordéon pénal -->
                     <div class="border-b border-slate-100">
-                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800"
-                                onclick="toggleAccordion(this)">
+                        <button class="w-full text-left p-4 flex justify-between items-center font-medium text-slate-800 focus-ring"
+                                onclick="toggleAccordion(this)"
+                                data-accordion="penal">
                             Sanctions Pénales (Délit)
                             <span class="material-symbols-outlined rotate-icon text-slate-400 transition-transform">
                                 expand_more
@@ -725,11 +797,11 @@
         </div>
 
         <div class="mt-8 flex justify-between items-center">
-            <button onclick="showModule(2)" class="btn btn-outline">
+            <button onclick="showModule(2)" class="btn btn-outline focus-ring">
                 Retour
             </button>
             <button onclick="showModule(4)"
-                    class="btn btn-primary flex items-center gap-2">
+                    class="btn btn-primary flex items-center gap-2 focus-ring">
                 Agir et Aider
                 <span class="material-symbols-outlined">arrow_forward</span>
             </button>
@@ -800,7 +872,8 @@
                     </span>
                     <input type="text"
                            placeholder="Un mot clé ?"
-                           class="bg-transparent text-center text-xl font-bold"
+                           class="bg-transparent text-center text-xl font-bold focus-ring"
+                           id="final-word"
                            style="border-bottom:1px solid rgba(22,163,74,0.4); padding-bottom:0.25rem; outline:none;"/>
                 </div>
             </div>
@@ -812,17 +885,32 @@
 
         <div class="mt-10 text-center">
             <button onclick="showModule(1)"
-                    class="text-slate-400 text-sm btn btn-outline">
+                    class="text-slate-400 text-sm btn btn-outline focus-ring">
                 Recommencer la séquence
             </button>
         </div>
     </section>
 
-</div>
+</main>
 
 <script>
     // --- LOGIQUE DE STOCKAGE DES REPRÉSENTATIONS ---
     let initialRepresentation = "";
+    const completionState = {
+        visited: new Set(),
+        completed: {
+            1: false,
+            2: false,
+            3: false,
+            4: false
+        },
+        quizAnswered: new Set(),
+        accordionsOpened: new Set()
+    };
+
+    const progressBar = document.getElementById('progress-bar');
+    const progressLabel = document.getElementById('progress-label');
+    const resetSequenceBtn = document.getElementById('reset-sequence');
 
     function saveInitialRepresentation() {
         const input = document.getElementById('initial-word');
@@ -838,7 +926,55 @@
             input.disabled = true;
 
             document.getElementById('display-initial-word').innerText = initialRepresentation;
+            completionState.completed[1] = true;
+            updateProgress();
         }
+    }
+
+    function updateProgress() {
+        const completedCount = Object.values(completionState.completed).filter(Boolean).length;
+        const percentage = (completedCount / 4) * 100;
+        progressBar.style.width = `${percentage}%`;
+        progressLabel.textContent = `${completedCount}/4 modules complétés`;
+    }
+
+    function resetSequence() {
+        initialRepresentation = "";
+        completionState.visited.clear();
+        completionState.quizAnswered.clear();
+        completionState.accordionsOpened.clear();
+        completionState.completed = {1: false, 2: false, 3: false, 4: false};
+
+        const input = document.getElementById('initial-word');
+        const feedback = document.getElementById('initial-feedback');
+        const btn = document.querySelector('#initial-input-group button');
+        input.value = "";
+        input.disabled = false;
+        feedback.classList.add('hidden');
+        btn.innerText = "Valider";
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        document.getElementById('display-initial-word').innerText = "...";
+
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.disabled = false;
+            option.classList.remove('opacity-50', 'cursor-not-allowed');
+            option.style.backgroundColor = '';
+            option.style.borderColor = '';
+            option.style.color = '';
+        });
+        document.querySelectorAll('.feedback-box').forEach(box => {
+            box.style.display = 'none';
+            box.className = 'feedback-box';
+            box.innerHTML = '';
+        });
+
+        document.querySelectorAll('.accordion-active').forEach(item => item.classList.remove('accordion-active'));
+
+        const finalInput = document.getElementById('final-word');
+        finalInput.value = '';
+
+        updateProgress();
+        showModule(1);
     }
 
     // --- NAVIGATION ENTRE MODULES ---
@@ -848,6 +984,7 @@
 
         document.getElementById(`module-${moduleId}`).classList.remove('hidden');
         document.querySelectorAll('.nav-item')[moduleId - 1].classList.add('active');
+        completionState.visited.add(moduleId);
 
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
@@ -865,6 +1002,11 @@
 
         const feedbackBox = parent.nextElementSibling;
         feedbackBox.style.display = 'block';
+        completionState.quizAnswered.add(parent.dataset.question);
+        if (completionState.quizAnswered.size >= 2) {
+            completionState.completed[2] = true;
+        }
+        updateProgress();
 
         if (isCorrect) {
             btn.style.backgroundColor = '#ecfdf3';
@@ -885,10 +1027,26 @@
     function toggleAccordion(btn) {
         const container = btn.parentElement;
         container.classList.toggle('accordion-active');
+        completionState.accordionsOpened.add(btn.dataset.accordion);
+        if (completionState.accordionsOpened.size >= 2) {
+            completionState.completed[3] = true;
+            updateProgress();
+        }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         showModule(1);
+        updateProgress();
+        document.getElementById('initial-word').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                saveInitialRepresentation();
+            }
+        });
+        document.getElementById('final-word').addEventListener('input', (event) => {
+            completionState.completed[4] = event.target.value.trim().length > 0;
+            updateProgress();
+        });
+        resetSequenceBtn.addEventListener('click', resetSequence);
     });
 </script>
 
